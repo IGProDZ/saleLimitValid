@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <template id="datelimite_sale_order_view" inherit_id="sale.report_saleorder_document">
+      <xpath expr="//div[@t-if='doc.date_order']" position="after">
+	<div t-if="doc.valid_until" class="col-xs-3">
+	  <strong>Limite de validité:</strong>
+	  <p t-field="o.valid_until"/>
+	</div>
+      </xpath>
+    </template>
+  </data>
+</openerp>
