@@ -3,7 +3,7 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="limitSale.field">
+    <record model="ir.ui.view" id="saleLimitValid.field">
       <field name="name">date limit field</field>
       <field name="model">sale.order</field>
       <field name="inherit_id" ref="sale.view_order_form"/>
