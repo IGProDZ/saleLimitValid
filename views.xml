@@ -10,8 +10,27 @@
       <field name="arch" type="xml">
         <!-- find field description and add the field
              valid_until it -->
-        <xpath expr="//field[@name='date_order']" position="after">
+	<xpath expr="//field[@name='date_order']" position="after">
+          <field name="valid_duration"/>
+        </xpath>
+	<xpath expr="//field[@name='date_order']" position="after">
           <field name="valid_until" string="Limite de Validité"/>
+        </xpath>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="saleLimitValid.configfield">
+      <field name="name">date limit config field</field>
+      <field name="model">sale.config.settings</field>
+      <field name="inherit_id" ref="sale.view_sales_config"/>
+      <field name="arch" type="xml">
+        <!-- find field description and add the field
+             valid_until it -->
+        <xpath expr="//div[@name='Sale Features']" position="inside">
+	  <div name="module_quotation_validity">
+	    <label for="validation_duration"/>
+	    <field name="default_valid_duration" class="oe_inline"/>
+	  </div>
         </xpath>
       </field>
     </record>
