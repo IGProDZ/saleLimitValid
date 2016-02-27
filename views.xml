@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
-
     <record id="ir_cron_scheduler_sale_order" model="ir.cron">
       <field name="name">sale_order_sch_daily</field>
       <field name="interval_number">1</field>
@@ -50,16 +49,14 @@
 
     <record model="ir.ui.view" id="saleLimitValid.configfield">
       <field name="name">date limit config field</field>
-      <field name="model">sale.config.settings</field>
-      <field name="inherit_id" ref="sale.view_sales_config"/>
+      <field name="model">res.company</field>
+      <field name="inherit_id" ref="base.view_company_form"/>
       <field name="arch" type="xml">
-        <!-- find field description and add the field
-             valid_until it -->
-        <xpath expr="//div[@name='Sale Features']" position="inside">
-	  <div name="module_quotation_validity">
-	    <label for="validation_duration"/>
-	    <field name="default_valid_duration" class="oe_inline"/>
-	  </div>
+        <xpath expr="//group[@name='account_grp']" position="before">
+    	  <group name="module_quotation_validity" string="Durée de validité des devis">
+    	    <!-- <label for="validation_duration"/> -->
+    	    <field name="default_valid_duration"/>
+    	  </group>
         </xpath>
       </field>
     </record>

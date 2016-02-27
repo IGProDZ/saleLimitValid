@@ -9,7 +9,11 @@ class addlimite(models.Model):
 
     valid_until  = fields.Date(compute="_date_compute", store=True, string="Limite de validité")
     valid_duration = fields.Integer(string="Durée de Validité")
-    #today = fields.Date(compute="_date_expiration")
+
+    @api.onchange('company_id')
+    def _valid_duration_onchange_company(self):
+        self.valid_duration=self.company_id.default_valid_duration
+
 
     # , cr, uid, context=None
     @api.model
@@ -57,6 +61,7 @@ class addlimite(models.Model):
 
 class addlimite(models.TransientModel):
     # _name = 'My.setting_sale_config'
-    _inherit = 'sale.config.settings'
+    # _inherit = 'sale.config.settings'
+    _inherit = 'res.company'
 
-    default_valid_duration = fields.Integer(string="Durée de Validité des devis (Jours) ", help="""Cette valeur définit la durée de validitié d'un devis client, elle sera utilisé comme valeur par défault """,  default_model='sale.order')
+    default_valid_duration = fields.Integer(string="Durée de Validité des devis (Jours) ", help="""Cette valeur définit la durée de validitié d'un devis client, elle sera utilisé comme valeur par défault """)
