@@ -2,20 +2,35 @@
 
 from openerp import models, fields, api
 from datetime import timedelta
-
+from datetime import date
 
 class addlimite(models.Model):
     _inherit = 'sale.order'
 
     valid_until = fields.Date(compute="_date_compute", required=True, string="Limite de validité")
     valid_duration = fields.Integer(string="Durée de Validité")
-    # today = fields.Date(default=context_today())
+    today = fields.Date(compute="_date_expiration")
 
+    # , cr, uid, context=None
 
-    # @api.depends('context_')
-    # def _date_compute(self):
+    def _cancel_expired_quotation(self, cr, uid, context=None):
+        context = dict(context or {})
+        print"====================================================================="
+        print "I AMMMMM INNNNNN"
+        print"====================================================================="
+        today = date.today().strftime('%Y-%m-%d')
+        for r in self:
+            if r.valid_until > today:
+                r.states="cancel"
 
+    def _date_expiration(self):
+        self.today =  date.today().strftime('%Y-%m-%d')
 
+    @api.onchange('today')
+    def _write_changes(self):
+
+        if self.valid_until > self.today:
+            return {'warning':{'title':'Attention', 'message':'devis expiré'}}
 
     @api.depends('date_order')
     def _date_compute(self):

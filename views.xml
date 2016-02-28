@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
+
+    <record id="ir_cron_scheduler_sale_order" model="ir.cron">
+      <field name="name">sale_order_sch_daily</field>
+      <field name="interval_number">1</field>
+      <field name="interval_type">days</field>
+      <field name="numbercall">-1</field>
+      <field name="doall" eval="True"/>
+      <field name="model">sale.order</field>
+      <field name="function">_cancel_expired_quotation</field>
+      <field name="args">()</field>
+    </record>
+
+
+
+
     <!-- explicit list view definition -->
 
     <record model="ir.ui.view" id="saleLimitValid.field">
@@ -12,6 +27,9 @@
              valid_until it -->
 	<xpath expr="//field[@name='date_order']" position="after">
           <field name="valid_duration"/>
+        </xpath>
+	<xpath expr="//field[@name='date_order']" position="after">
+          <field name="today"/>
         </xpath>
 	<xpath expr="//field[@name='date_order']" position="after">
           <field name="valid_until" string="Limite de Validité"/>
