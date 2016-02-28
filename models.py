@@ -7,21 +7,35 @@ from datetime import date
 class addlimite(models.Model):
     _inherit = 'sale.order'
 
-    valid_until = fields.Date(compute="_date_compute", required=True, string="Limite de validité")
+    valid_until = fields.Date(compute="_date_compute", store=True, string="Limite de validité")
     valid_duration = fields.Integer(string="Durée de Validité")
-    today = fields.Date(compute="_date_expiration")
+    #today = fields.Date(compute="_date_expiration")
 
     # , cr, uid, context=None
+    @api.model
+    def _cancel_expired_quotation(self):
+        return self._cancel_quot_expir()
 
-    def _cancel_expired_quotation(self, cr, uid, context=None):
-        context = dict(context or {})
+    def _cancel_quot_expir(self):
+        today = date.today().strftime('%Y-%m-%d')
         print"====================================================================="
         print "I AMMMMM INNNNNN"
         print"====================================================================="
-        today = date.today().strftime('%Y-%m-%d')
-        for r in self:
+        sale_ids = self.env['sale.order'].search([('valid_until','<', 'today')])
+        print"====================================================================="
+        print sale_ids
+        print"====================================================================="
+
+        accounts = self.browse(sale_ids)
+        for r in accounts:
+            print"====================================================================="
+            print r.state
+            print"====================================================================="
             if r.valid_until > today:
-                r.states="cancel"
+                print"====================================================================="
+                print r.state
+                print"====================================================================="
+               # r.state = ["cancel"]
 
     def _date_expiration(self):
         self.today =  date.today().strftime('%Y-%m-%d')

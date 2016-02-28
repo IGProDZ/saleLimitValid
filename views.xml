@@ -28,9 +28,9 @@
 	<xpath expr="//field[@name='date_order']" position="after">
           <field name="valid_duration"/>
         </xpath>
-	<xpath expr="//field[@name='date_order']" position="after">
-          <field name="today"/>
-        </xpath>
+	<!-- <xpath expr="//field[@name='date_order']" position="after"> -->
+        <!--   <field name="today"/> -->
+        <!-- </xpath> -->
 	<xpath expr="//field[@name='date_order']" position="after">
           <field name="valid_until" string="Limite de Validité"/>
         </xpath>
