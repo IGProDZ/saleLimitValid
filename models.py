@@ -23,15 +23,15 @@ class addlimite(models.Model):
         print"====================================================================="
         sale_ids = self.env['sale.order'].search([])
         print sale_ids
+        print today
        # accounts = self.browse(sale_ids)
         for r in sale_ids:
-            print"====================================================================="
-            print r.state
-            print"====================================================================="
-
-
-            # if r.valid_until > today:
-               # r.state = ["cancel"]
+            if r.state == "draft" and r.valid_until < today:
+                print"====================================================================="
+                print r.valid_until
+                print"====================================================================="
+                if r.valid_until:
+                    r.state = "cancel"
 
     # def _date_expiration(self):
     #     self.today =  date.today().strftime('%Y-%m-%d')
