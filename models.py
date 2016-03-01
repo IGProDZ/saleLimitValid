@@ -7,7 +7,7 @@ from datetime import date
 class addlimite(models.Model):
     _inherit = 'sale.order'
 
-    valid_until = fields.Date(compute="_date_compute", store=True, string="Limite de validité")
+    valid_until  = fields.Date(compute="_date_compute", store=True, string="Limite de validité")
     valid_duration = fields.Integer(string="Durée de Validité")
     #today = fields.Date(compute="_date_expiration")
 
@@ -21,32 +21,28 @@ class addlimite(models.Model):
         print"====================================================================="
         print "I AMMMMM INNNNNN"
         print"====================================================================="
-        sale_ids = self.env['sale.order'].search([('valid_until','<', 'today')])
-        print"====================================================================="
+        sale_ids = self.env['sale.order'].search([])
         print sale_ids
-        print"====================================================================="
-
-        accounts = self.browse(sale_ids)
-        for r in accounts:
+       # accounts = self.browse(sale_ids)
+        for r in sale_ids:
             print"====================================================================="
             print r.state
             print"====================================================================="
-            if r.valid_until > today:
-                print"====================================================================="
-                print r.state
-                print"====================================================================="
+
+
+            # if r.valid_until > today:
                # r.state = ["cancel"]
 
-    def _date_expiration(self):
-        self.today =  date.today().strftime('%Y-%m-%d')
+    # def _date_expiration(self):
+    #     self.today =  date.today().strftime('%Y-%m-%d')
 
-    @api.onchange('today')
-    def _write_changes(self):
+    # @api.onchange('today')
+    # def _write_changes(self):
 
-        if self.valid_until > self.today:
-            return {'warning':{'title':'Attention', 'message':'devis expiré'}}
+    #     if self.valid_until > self.today:
+    #         return {'warning':{'title':'Attention', 'message':'devis expiré'}}
 
-    @api.depends('date_order')
+    @api.depends('date_order','valid_duration')
     def _date_compute(self):
         for r in self:
             if not r.date_order:

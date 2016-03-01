@@ -13,6 +13,17 @@
       <field name="args">()</field>
     </record>
 
+    <record model="ir.ui.view" id="sale.view_quotation_custum_tree">
+      <field name="name">date limit de validité</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_quotation_tree"/>
+      <field name="arch" type="xml">
+	<xpath expr="//field[@name='date_order']" position="after">
+	  <!-- <filter string="Expired Quotation" filter_domain="[('valid_until', '&lt;', context_today()), ('state', 'ilike', 'cancel')]" /> -->
+	  <field name="valid_until"/>
+	</xpath>
+      </field>
+    </record>
 
 
 
